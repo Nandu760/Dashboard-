@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🧰 Tool Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    /* Body and background */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      /* Background image + sky blue overlay */
+      background:
+        linear-gradient(135deg, rgba(15, 46, 65, 0.6), rgba(15, 46, 65, 0.6)),
+        url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #1e3a8a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 0;
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      width: 95%;
+      backdrop-filter: saturate(180%) blur(15px);
+      background: rgba(146, 181, 211, 0.85);
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 32px rgba(30, 58, 138, 0.3);
+      color: #1e3a8a;
+    }
+
+    /* Heading */
+    h1 {
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      color: #0284c7;
+      user-select: none;
+      text-shadow: 0 0 10px #60a5fa;
+    }
+
+    /* User status area */
+    .user-status {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      color: #3b82f6;
+    }
+
+    .user-status strong {
+      color: #0284c7;
+    }
+
+    /* Auth buttons */
+    .auth-buttons a {
+      margin: 0 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(3, 105, 161, 0.3);
+      transition: all 0.3s ease;
+      user-select: none;
+      color:rgb(6, 20, 27);
+      background: #dbeafe;
+      border: 2px solid #0284c7;
+      display: inline-block;
+    }
+
+    .auth-buttons a:hover {
+      background: #0284c7;
+      color: #eff6ff;
+      box-shadow: 0 6px 16px rgba(3, 105, 161, 0.6);
+      text-decoration: none;
+    }
+
+    /* Cards grid with zigzag effect */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px 40px;
+    }
+
+    /* Zigzag card positioning */
+    .card:nth-child(odd) {
+      justify-self: start;
+      grid-column: 1 / 2;
+      text-align: left;
+    }
+
+    .card:nth-child(even) {
+      justify-self: end;
+      grid-column: 2 / 3;
+      text-align: right;
+    }
+
+    /* Card styling */
+    .card {
+      background: #dbeafecc;
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(3, 105, 161, 0.3);
+      padding: 30px 25px;
+      color: #1e3a8a;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      cursor: pointer;
+      max-width: 400px;
+      backdrop-filter: saturate(180%) blur(8px);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 40px rgba(3, 105, 161, 0.6);
+    }
+
+    /* Emoji in cards */
+    .card .emoji {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 2px 3px rgba(3, 105, 161, 0.5));
+    }
+
+    /* Card title */
+    .card-title {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #0284c7;
+    }
+
+    /* Card link */
+    .card a {
+      text-decoration: none;
+      color: #0284c7;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 22px;
+      display: inline-block;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #60a5fa, #3b82f6);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+      transition: background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    }
+
+    .card a:hover {
+      background: linear-gradient(45deg, #3b82f6,rgb(96, 145, 202));
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.7);
+      color:rgb(2, 6, 12);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .row {
+        grid-template-columns: 1fr;
+        gap: 25px 0;
+      }
+
+      .card {
+        max-width: 100%;
+        text-align: center !important;
+        justify-self: center !important;
+      }
+    }
+
+    @media (max-width: 575px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card .emoji {
+        font-size: 2.8rem;
+      }
+
+      .card-title {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>🧰Welcome to Flask Mini Apps</h1>
+
+    <div class="user-status">
+      {% if session.user %}
+      <p>Logged in as <strong>{{ session.user }}</strong></p>
+      <div class="auth-buttons">
+        <a href="/logout">Logout</a>
+      </div>
+      {% else %}
+      <div class="auth-buttons">
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="row">
+      <div class="card">
+        <div class="emoji">🧮</div>
+        <div class="card-title">Calculator</div>
+        <a href="/calculator">Open Tool →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">💱</div>
+        <div class="card-title">Currency Converter</div>
+        <a href="/currency">Open Tool →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">🎯</div>
+        <div class="card-title">Guessing Game</div>
+        <a href="/guess">Play Game →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">📝</div>
+        <div class="card-title">Registration Form</div>
+        <a href="/register">Fill Form →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">✊📄✂️</div>
+        <div class="card-title">Rock Paper Scissors</div>
+        <a href="/rps">Play Game →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">📜</div>
+        <div class="card-title">Random Quote</div>
+        <a href="/quote">Inspire Me →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">☀️</div>
+        <div class="card-title">Weather Info</div>
+        <a href="/weather">Check Weather →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">✍️</div>
+        <div class="card-title">Feedback Form</div>
+        <a href="/feedback">Open Tool →</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">👥</div>
+        <div class="card-title">View Users</div>
+        <a href="/view-users">See Users →</a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

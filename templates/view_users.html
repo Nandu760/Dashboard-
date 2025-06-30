@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registered Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light text-dark d-flex flex-column align-items-center min-vh-100 p-4">
+
+  <div class="w-100" style="max-width: 600px;">
+    <h2 class="mb-4 text-center">Registered Users</h2>
+    <ul class="list-group">
+      {% for user in users %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ user[0] }}</strong> — {{ user[1] }}
+          </div>
+          <small class="text-muted">({{ user[2] }})</small>
+        </li>
+      {% else %}
+        <li class="list-group-item text-center text-muted">No registered users found.</li>
+      {% endfor %}
+    </ul>
+    <a href="/" class="btn btn-outline-secondary mt-4 w-100">⬅️ Back to Dashboard</a>
+  </div>
+
+</body>
+</html>
