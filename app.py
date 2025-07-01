@@ -106,16 +106,19 @@ def calculator():
     return render_template('calc.html', result=result)
 
 # Currency Converter
-@app.route('/converter', methods=['GET', 'POST'])
+@app.route('/currency', methods=['GET', 'POST'])
 def converter():
     result = ""
     if request.method == 'POST':
-        amount = float(request.form['amount'])
-        rate = float(request.form['rate'])
-        from_currency = request.form['from_currency']
-        to_currency = request.form['to_currency']
-        converted_amount = amount * rate
-        result = f"{amount} {from_currency} = {converted_amount} {to_currency}"
+        try:
+            amount = float(request.form['amount'])
+            rate = float(request.form['rate'])
+            from_currency = request.form['from_currency']
+            to_currency = request.form['to_currency']
+            converted_amount = amount * rate
+            result = f"{amount} {from_currency} = {converted_amount:.2f} {to_currency}"
+        except ValueError:
+            result = "Invalid input. Please enter valid numbers."
     return render_template('currcon.html', result=result)
 
 # Guessing Game
